@@ -1,23 +1,24 @@
-package com.williams.springreactiveapp.model;
+package com.williams.multipledatasource.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tutorials")
+@Entity
+@Table(name = "Tutorials")
 public class Tutorial {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String description;
-    @Column("is_publish")
+    @Column(name = "is_publish")
     private boolean isPublished;
+
 
 }

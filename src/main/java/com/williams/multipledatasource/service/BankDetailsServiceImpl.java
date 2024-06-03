@@ -4,30 +4,43 @@ import com.williams.multipledatasource.external.model.BankDetails;
 import com.williams.multipledatasource.external.repository.BankDetailsRepository;
 import com.williams.multipledatasource.model.Tutorial;
 import com.williams.multipledatasource.repository.TutorialRepository;
+import com.williams.multipledatasource.service.impl.BankDetailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class BankDetailsService {
+public class BankDetailsServiceImpl implements BankDetailService {
 
+    private static final Logger log = LoggerFactory.getLogger(BankDetailsServiceImpl.class);
     private final BankDetailsRepository bankDetailsRepository;
     private final TutorialRepository tutorialRepository;
 
     @Autowired
-    public BankDetailsService(BankDetailsRepository bankDetailsRepository, TutorialRepository tutorialRepository) {
+    public BankDetailsServiceImpl(BankDetailsRepository bankDetailsRepository, TutorialRepository tutorialRepository) {
         this.bankDetailsRepository = bankDetailsRepository;
         this.tutorialRepository = tutorialRepository;
     }
-    public BankDetails saveEmployeeBankDetails(BankDetails bankDetails) {
+    public Tutorial saveEmployeeBankDetails(BankDetails bankDetails) {
         try{
-        BankDetails savedBankDetails = new BankDetails();
-        List<Tutorial> savedTutorial = tutorialRepository.findAll();
-    if (savedTutorial != null) {
-        savedBankDetails = bankDetailsRepository.save(bankDetails);
-          }
-    return savedBankDetails;
-    } catch () {}
+        Tutorial savedTutorials = new Tutorial();
+        BankDetails savedBankDetails;
+            savedBankDetails = bankDetailsRepository.findBankDetailsByEmployeeBankAccountNumber(
+                    bankDetails.getEmployeeBankAccountNumber());
+            if(savedBankDetails == null){
+                throw new Exception("Employee bank account number not found");
+            }
+            savedTutorials.setDescription(bankDetails.getEmployeeAccountName());
+            savedTutorials.setPublished(true);
+            savedTutorials.setTitle(bankDetails.getEmployeeId());
+            savedTutorials = tutorialRepository.save(savedTutorials);
+            log.info("Saved employee bank details {}", savedTutorials);
+
+    return savedTutorials;
+    } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+    }
+
 }
