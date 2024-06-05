@@ -23,6 +23,6 @@ public class BankDetails {
     @Column(name = "employee_account_name")
     private String employeeAccountName;
     @Column(name = "emp_id")
-    private String employeeId;
+    private Long employeeId;
 
 }

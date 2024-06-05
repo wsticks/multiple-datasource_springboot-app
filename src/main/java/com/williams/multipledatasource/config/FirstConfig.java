@@ -41,7 +41,7 @@ public class FirstConfig {
             @Qualifier("datasource1") DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
-                .packages("com.williams.multipledatasource.model")
+                .packages("com.williams.multipledatasource.model.entity")
                 .persistenceUnit("default")
                 .build();
     }

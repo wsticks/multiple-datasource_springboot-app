@@ -1,7 +1,7 @@
 package com.williams.multipledatasource.controller;
 
 import com.williams.multipledatasource.external.model.BankDetails;
-import com.williams.multipledatasource.model.Tutorial;
+import com.williams.multipledatasource.model.entity.Tutorial;
 import com.williams.multipledatasource.service.impl.BankDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

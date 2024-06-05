@@ -1,11 +1,12 @@
 package com.williams.multipledatasource.repository;
 
-import com.williams.multipledatasource.model.entity.Tutorial;
+
+import com.williams.multipledatasource.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TutorialRepository extends JpaRepository<Tutorial, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-
+    User findUserByUsername(String username);
 }

@@ -1,4 +1,4 @@
-package com.williams.multipledatasource.model;
+package com.williams.multipledatasource.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

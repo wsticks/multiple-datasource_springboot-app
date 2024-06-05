@@ -1,8 +1,9 @@
 package com.williams.multipledatasource.service;
 
+import com.williams.multipledatasource.exception.CustomException;
 import com.williams.multipledatasource.external.model.BankDetails;
 import com.williams.multipledatasource.external.repository.BankDetailsRepository;
-import com.williams.multipledatasource.model.Tutorial;
+import com.williams.multipledatasource.model.entity.Tutorial;
 import com.williams.multipledatasource.repository.TutorialRepository;
 import com.williams.multipledatasource.service.impl.BankDetailService;
 import org.slf4j.Logger;
@@ -29,17 +30,17 @@ public class BankDetailsServiceImpl implements BankDetailService {
             savedBankDetails = bankDetailsRepository.findBankDetailsByEmployeeBankAccountNumber(
                     bankDetails.getEmployeeBankAccountNumber());
             if(savedBankDetails == null){
-                throw new Exception("Employee bank account number not found");
+        throw new CustomException("Employee bank account number not found");
             }
             savedTutorials.setDescription(bankDetails.getEmployeeAccountName());
             savedTutorials.setPublished(true);
-            savedTutorials.setTitle(bankDetails.getEmployeeId());
+            savedTutorials.setTitle(String.valueOf(bankDetails.getEmployeeId()));
             savedTutorials = tutorialRepository.save(savedTutorials);
             log.info("Saved employee bank details {}", savedTutorials);
 
     return savedTutorials;
     } catch (Exception e) {
-            throw new RuntimeException(e);
+      throw new CustomException(e.getMessage());
         }
     }
 
